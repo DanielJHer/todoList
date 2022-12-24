@@ -51,3 +51,16 @@
   bottom: 1%;
   width: 93%;
 }
+
+.gitBtn {
+  display: flex;
+  align-self: center;
+  padding: 1%;
+  bottom: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+.gitBtn:hover {
+  opacity: 50%;
+}
