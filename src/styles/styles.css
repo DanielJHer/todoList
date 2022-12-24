@@ -1,11 +1,53 @@
-#header {
+:root {
+  position: relative;
+  min-height: 100%;
+  --primary-dark: #333;
+  --secondary-dark: #444;
+  --primary-light: #eee;
+  --secondary-light: #ddd;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-#projects {
+.header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 5%;
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+  font-size: 2em;
+  font-weight: 600;
 }
 
-#display {
+.main {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
 
-#footer {
+.projects {
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  padding: 5%;
+}
+
+.display {
+  flex-direction: column;
+  padding: 5%;
+}
+
+.footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 3%;
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+  font-weight: 200;
+  bottom: 1%;
+  width: 93%;
 }
