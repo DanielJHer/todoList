@@ -33,16 +33,23 @@
 }
 
 .display {
+  display: flex;
+  position: absolute;
   flex-direction: column;
   padding: 5%;
 }
 
 .addTaskDiv {
+  padding: 10px;
 }
 
 .addTaskDiv:hover {
   background-color: var(--secondary-light);
   cursor: pointer;
+}
+
+.hide {
+  display: none;
 }
 
 .footer {
@@ -67,8 +74,9 @@
   bottom: 0;
   width: 1rem;
   height: 1rem;
+  transition: transform 0.5s;
 }
 
 .gitBtn:hover {
-  opacity: 50%;
+  transform: scale(1.5);
 }
