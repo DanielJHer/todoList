@@ -16,15 +16,38 @@
       <div class="display">
         <p class="taskHeader">Tasks To Do</p>
         <div class="addTaskDiv">+ Add Task</div>
-        <div class="inputForm hide">
-          <input type="text" class="inputText" />
-          <button class="submitBtn">Submit</button>
-          <button class="cancelBtn">Cancel</button>
-        </div>
+        <form class="inputForm hide">
+          <label>Title:</label>
+          <input type="text" class="inputText" placeholder="What to do?" />
+
+          <label>Details:</label>
+          <textarea
+            type="text"
+            placeholder="Let's try to be specific"
+          ></textarea>
+
+          <label>Priority:</label>
+          <div class="priorityForm">
+            <label>Low</label>
+            <input type="radio" value="low" name="priority" />
+            <label>Medium</label>
+            <input type="radio" value="medium" name="priority" />
+            <label>High</label>
+            <input type="radio" value="high" name="priority" />
+          </div>
+
+          <label>Due Date:</label>
+          <input type="date" />
+
+          <div class="formBtns">
+            <button class="submitBtn">Submit</button>
+            <button class="cancelBtn">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
     <div class="footer">
-      <p>Copyright © 2022 Daniel Her</p>
+      <p>2022 © Daniel Her</p>
       <a href="https://github.com/DanielJHer" class="gitBtn">
         <img src="images/github-mark-white.png" alt="gitBtn"
       /></a>

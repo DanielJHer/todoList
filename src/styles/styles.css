@@ -19,6 +19,10 @@
   font-weight: 600;
 }
 
+.hide {
+  display: none;
+}
+
 .main {
   display: flex;
   justify-content: center;
@@ -37,6 +41,8 @@
   position: absolute;
   flex-direction: column;
   padding: 5%;
+  width: 50%;
+  right: 7%;
 }
 
 .addTaskDiv {
@@ -48,8 +54,15 @@
   cursor: pointer;
 }
 
-.hide {
-  display: none;
+.inputForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.priorityForm {
+  display: flex;
+  justify-content: center;
+  font-size: small;
 }
 
 .footer {
