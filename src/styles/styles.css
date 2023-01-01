@@ -59,6 +59,10 @@
   flex-direction: column;
 }
 
+.inputForm.hide {
+  display: none;
+}
+
 .priorityForm {
   display: flex;
   justify-content: center;
