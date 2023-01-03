@@ -5,7 +5,12 @@ const renderHomePage = () => {
   const inputText = document.querySelector(".inputText");
   const submitBtn = document.querySelector(".submitBtn");
   const cancelBtn = document.querySelector(".cancelBtn");
-  const taskHeader = document.querySelector(".taskHeader");
+  const textArea = document.querySelector(".textArea");
+  const inputDate = document.querySelector(".inputDate");
+  const priority = document.getElementsByName("priority");
+
+  // array that stores tasks
+  let taskList = [];
 
   // Rendering functions
   const toggleHide = () => {
@@ -13,6 +18,7 @@ const renderHomePage = () => {
     inputForm.classList.remove("hide");
   };
 
+  // creating tasks with factory functions
   const createTaskObject = (title, description, dueDate, priority) => {
     return {
       title,
@@ -22,12 +28,25 @@ const renderHomePage = () => {
     };
   };
 
-  const createTask = (content) => {
-    const newTask = document.createElement("div");
-    newTask.innerText = content;
+  const findPriority = (elements) => {
+    elements.map((e) => (e.checked ? e.value : ""));
+  };
 
-    const newContent = createTaskObject(content);
-    taskHeader.appendChild(newTask);
+  const processTaskInput = () => {
+    let title = inputText.value;
+    let description = textArea.value;
+    let dueDate = inputDate.value;
+    let priority = findPriority(priority);
+
+    const newTaskObject = createTaskObject(
+      title,
+      description,
+      dueDate,
+      priority
+    );
+
+    tasklist.push(newTaskObject);
+    console.log(taskList);
   };
 
   // event listeners
@@ -36,9 +55,7 @@ const renderHomePage = () => {
   });
 
   submitBtn.addEventListener("click", (e) => {
-    const inputContent = inputText.value;
-    inputText.value = "";
-    createTask(inputContent);
+    processTaskInput();
     toggleHide();
   });
 
