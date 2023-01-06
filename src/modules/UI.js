@@ -40,10 +40,6 @@ const renderHomePage = () => {
     }
   };
 
-  const storeObject = () => {
-    localStorage.setItem("taskList", JSON.stringify(taskList));
-  };
-
   // getting user input to create object
   const processTaskInput = () => {
     // gather user input
@@ -61,8 +57,9 @@ const renderHomePage = () => {
     );
 
     // locally store object
+    let taskList = JSON.parse(localStorage.getItem("taskList"));
     taskList.push(newTaskObject);
-    storeObject();
+    localStorage.setItem("taskList", JSON.stringify(taskList));
   };
 
   // event listeners
@@ -72,7 +69,6 @@ const renderHomePage = () => {
   });
 
   submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
     processTaskInput();
     toggleHide();
   });
