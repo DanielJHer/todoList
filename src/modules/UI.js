@@ -1,3 +1,5 @@
+import storeObject from "./Storage";
+
 const renderHomePage = () => {
   // Selecting DOM elements
   const addTaskDiv = document.querySelector(".addTaskDiv");
@@ -7,9 +9,10 @@ const renderHomePage = () => {
   const cancelBtn = document.querySelector(".cancelBtn");
   const textArea = document.querySelector(".textArea");
   const inputDate = document.querySelector(".inputDate");
-  const priority = document.getElementsByName("priority");
+  const priorityList = document.getElementsByName("priority");
+  const addProjectDiv = document.querySelector(".addProjectDiv");
 
-  // array that stores tasks
+  // array that stores tasks as objects
   let taskList = [];
 
   // Rendering functions
@@ -28,16 +31,28 @@ const renderHomePage = () => {
     };
   };
 
-  const findPriority = (elements) => {
-    elements.map((e) => (e.checked ? e.value : ""));
+  // finding priority
+  const findPriority = (nodeList) => {
+    for (let i = 0; i < nodeList.length; i++) {
+      if (nodeList[i].checked === true) {
+        return nodeList[i].value;
+      }
+    }
   };
 
-  const processTaskInput = () => {
-    let title = inputText.value;
-    let description = textArea.value;
-    let dueDate = inputDate.value;
-    let priority = findPriority(priority);
+  const storeObject = () => {
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+  };
 
+  // getting user input to create object
+  const processTaskInput = () => {
+    // gather user input
+    const title = inputText.value;
+    const description = textArea.value;
+    const dueDate = inputDate.value;
+    const priority = findPriority(priorityList);
+
+    // creates new object using factory function
     const newTaskObject = createTaskObject(
       title,
       description,
@@ -45,16 +60,19 @@ const renderHomePage = () => {
       priority
     );
 
-    tasklist.push(newTaskObject);
-    console.log(taskList);
+    // locally store object
+    taskList.push(newTaskObject);
+    storeObject();
   };
 
   // event listeners
   addTaskDiv.addEventListener("click", (e) => {
     toggleHide();
+    inputText.focus();
   });
 
   submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     processTaskInput();
     toggleHide();
   });
@@ -62,6 +80,8 @@ const renderHomePage = () => {
   cancelBtn.addEventListener("click", (e) => {
     toggleHide();
   });
+
+  addProjectDiv.addEventListener("click", (e) => {});
 };
 
 export default renderHomePage;
