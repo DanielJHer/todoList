@@ -2,6 +2,7 @@ import storeObject from "./Storage";
 
 const renderHomePage = () => {
   // Selecting DOM elements
+  const taskHeader = document.querySelector(".taskHeader");
   const addTaskDiv = document.querySelector(".addTaskDiv");
   const inputForm = document.querySelector(".inputForm");
   const inputText = document.querySelector(".inputText");
@@ -15,10 +16,10 @@ const renderHomePage = () => {
   // array that stores tasks as objects
   let taskList = [];
 
-  // Rendering functions
+  // Rendering form
   const toggleHide = () => {
-    addTaskDiv.classList.add("hide");
-    inputForm.classList.remove("hide");
+    addTaskDiv.classList.toggle("hide");
+    inputForm.classList.toggle("hide");
   };
 
   // creating tasks with factory functions
@@ -40,9 +41,9 @@ const renderHomePage = () => {
     }
   };
 
-  // getting user input to create object
-  const processTaskInput = () => {
-    // gather user input
+  // process input -> stores object -> renders to DOM
+  const processTaskInput = (e) => {
+    // gathers user input
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
@@ -56,10 +57,24 @@ const renderHomePage = () => {
       priority
     );
 
-    // locally store object
-    let taskList = JSON.parse(localStorage.getItem("taskList"));
+    // locally stores objects
+    const taskList = JSON.parse(localStorage.getItem("taskList"));
     taskList.push(newTaskObject);
     localStorage.setItem("taskList", JSON.stringify(taskList));
+
+    // renders task into DOM
+    renderTask(title, description, dueDate, priority);
+  };
+
+  const renderTask = (title, description, dueDate, priority) => {
+    taskHeader.insertAdjacentHTML(
+      "afterEnd",
+      `
+      <div class="tasks">
+      <p>Title:${title} Description:${description} Due Date:${dueDate} Priority:${priority}<p>
+      </div>
+      `
+    );
   };
 
   // event listeners
