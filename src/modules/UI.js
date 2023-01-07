@@ -63,18 +63,20 @@ const renderHomePage = () => {
     localStorage.setItem("taskList", JSON.stringify(taskList));
 
     // renders task into DOM
-    renderTask(title, description, dueDate, priority);
+    renderTask(taskList);
   };
 
-  const renderTask = (title, description, dueDate, priority) => {
-    taskHeader.insertAdjacentHTML(
-      "afterEnd",
-      `
-      <div class="tasks">
-      <p>Title:${title} Description:${description} Due Date:${dueDate} Priority:${priority}<p>
-      </div>
-      `
-    );
+  const renderTask = (taskList) => {
+    taskList.forEach((task) => {
+      taskHeader.insertAdjacentHTML(
+        "afterEnd",
+        `
+        <div class="tasks">
+        <p>Title:${task.title} Description:${task.description} Due Date:${task.dueDate} Priority:${task.priority}<p>
+        </div>
+        `
+      );
+    });
   };
 
   // event listeners
