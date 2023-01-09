@@ -1,8 +1,5 @@
-import storeObject from "./Storage";
-
 const renderHomePage = () => {
   // Selecting DOM elements
-  const taskHeader = document.querySelector(".taskHeader");
   const addTaskDiv = document.querySelector(".addTaskDiv");
   const inputForm = document.querySelector(".inputForm");
   const inputText = document.querySelector(".inputText");
@@ -18,9 +15,6 @@ const renderHomePage = () => {
   if (!localStorage.length === 0) {
     // gather local storage json and render into dom
   }
-
-  // array that stores tasks as objects
-  let taskList = [];
 
   // toggle forms
   const toggleHide = () => {
@@ -40,17 +34,18 @@ const renderHomePage = () => {
 
   // finding priority
   const findPriority = (nodeList) => {
-    nodeList.forEach((el) => {
-      el.checked === true ? el.value : "";
-    });
+    for (let i = 0; i < nodeList.length; i++) {
+      if (nodeList[i].checked === true) return nodeList[i].value;
+    }
   };
 
   // process input -> stores object -> renders to DOM
-  const processTaskInput = (e) => {
+  const processTaskInput = () => {
     // gathers user input
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
+    console.log(priorityList);
     const priority = findPriority(priorityList);
 
     // creates new object using factory function
