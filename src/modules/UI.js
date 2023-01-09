@@ -12,11 +12,17 @@ const renderHomePage = () => {
   const inputDate = document.querySelector(".inputDate");
   const priorityList = document.getElementsByName("priority");
   const addProjectDiv = document.querySelector(".addProjectDiv");
+  const taskListDiv = document.querySelector(".taskListDiv");
+
+  // renders local storage into dom
+  if (!localStorage.length === 0) {
+    // gather local storage json and render into dom
+  }
 
   // array that stores tasks as objects
   let taskList = [];
 
-  // Rendering form
+  // toggle forms
   const toggleHide = () => {
     addTaskDiv.classList.toggle("hide");
     inputForm.classList.toggle("hide");
@@ -34,11 +40,9 @@ const renderHomePage = () => {
 
   // finding priority
   const findPriority = (nodeList) => {
-    for (let i = 0; i < nodeList.length; i++) {
-      if (nodeList[i].checked === true) {
-        return nodeList[i].value;
-      }
-    }
+    nodeList.forEach((el) => {
+      el.checked === true ? el.value : "";
+    });
   };
 
   // process input -> stores object -> renders to DOM
@@ -58,7 +62,7 @@ const renderHomePage = () => {
     );
 
     // locally stores objects
-    const taskList = JSON.parse(localStorage.getItem("taskList"));
+    const taskList = JSON.parse(localStorage.getItem("taskList") || "[]");
     taskList.push(newTaskObject);
     localStorage.setItem("taskList", JSON.stringify(taskList));
 
@@ -67,9 +71,10 @@ const renderHomePage = () => {
   };
 
   const renderTask = (taskList) => {
+    taskListDiv.innerHTML = "";
     taskList.forEach((task) => {
-      taskHeader.insertAdjacentHTML(
-        "afterEnd",
+      taskListDiv.insertAdjacentHTML(
+        "afterbegin",
         `
         <div class="tasks">
         <p>Title:${task.title} Description:${task.description} Due Date:${task.dueDate} Priority:${task.priority}<p>
