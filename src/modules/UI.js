@@ -11,11 +11,6 @@ const renderHomePage = () => {
   const addProjectDiv = document.querySelector(".addProjectDiv");
   const taskListDiv = document.querySelector(".taskListDiv");
 
-  // renders local storage into dom
-  if (!localStorage.length === 0) {
-    // gather local storage json and render into dom
-  }
-
   // toggle forms
   const toggleHide = () => {
     addTaskDiv.classList.toggle("hide");
@@ -45,7 +40,6 @@ const renderHomePage = () => {
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
-    console.log(priorityList);
     const priority = findPriority(priorityList);
 
     // creates new object using factory function
@@ -78,6 +72,10 @@ const renderHomePage = () => {
       );
     });
   };
+
+  // renders local storage into dom
+  const taskList = JSON.parse(localStorage.getItem("taskList") || "[]");
+  renderTask(taskList);
 
   // event listeners
   addTaskDiv.addEventListener("click", (e) => {
