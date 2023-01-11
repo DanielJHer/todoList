@@ -42,6 +42,17 @@ const renderHomePage = () => {
     const dueDate = inputDate.value;
     const priority = findPriority(priorityList);
 
+    // conditionals
+    if (
+      title.length === 0 ||
+      description.length === 0 ||
+      dueDate.length === 0 ||
+      priority.length === 0
+    ) {
+      alert("Please complete all fields");
+      return;
+    }
+
     // creates new object using factory function
     const newTaskObject = createTaskObject(
       title,
