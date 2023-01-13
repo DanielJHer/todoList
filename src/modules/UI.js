@@ -10,6 +10,12 @@ const renderHomePage = () => {
   const priorityList = document.getElementsByName("priority");
   const addProjectDiv = document.querySelector(".addProjectDiv");
   const taskListDiv = document.querySelector(".taskListDiv");
+  const projectListDiv = document.querySelector(".projectListDiv");
+
+  // Render Projects
+  // append default project to DOM upon first render
+  // store tasklists within projects like objects within objects
+  // selected project is rendered to DOM
 
   // toggle forms
   const toggleHide = () => {
