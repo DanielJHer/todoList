@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const renderHomePage = () => {
   // Selecting DOM elements
   const addTaskDiv = document.querySelector('.addTaskDiv');
@@ -33,6 +34,7 @@ const renderHomePage = () => {
 
   // finding priority
   const findPriority = (nodeList) => {
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < nodeList.length; i++) {
       if (nodeList[i].checked === true) return nodeList[i].value;
     }

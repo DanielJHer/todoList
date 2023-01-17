@@ -29,20 +29,30 @@
   flex-direction: row;
 }
 
-.projects {
+.projectDiv {
   flex-direction: column;
   position: absolute;
   left: 0;
   padding: 5%;
+  width: 30%;
 }
 
-.display {
+.taskDiv {
   display: flex;
   position: absolute;
   flex-direction: column;
   padding: 5%;
   width: 50%;
   right: 7%;
+}
+
+.addProjectDiv {
+  padding: 10px;
+}
+
+.addProjectDiv:hover {
+  background-color: var(--secondary-light);
+  cursor: pointer;
 }
 
 .addTaskDiv {
@@ -52,6 +62,12 @@
 .addTaskDiv:hover {
   background-color: var(--secondary-light);
   cursor: pointer;
+}
+
+.tasks {
+}
+
+.projects {
 }
 
 .inputForm {
