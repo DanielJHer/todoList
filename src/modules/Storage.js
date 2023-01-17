@@ -1,5 +1,7 @@
-const storeObject = () => {
-  localStorage.setItem("taskList", JSON.stringify(taskList));
-};
+// retrieve porject list or empty array
+const projectList = JSON.parse(localStorage.getItem('projectList')) || '[]';
 
-export default storeObject;
+// retrieve id from local storage
+const id = Number(localStorage.getItem('currentId')) || 0;
+
+export default { projectList, id };

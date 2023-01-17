@@ -1,3 +1,5 @@
+import { projectList, id } from './Storage';
+
 /* eslint-disable consistent-return */
 const renderHomePage = () => {
   // Selecting DOM elements
@@ -12,16 +14,31 @@ const renderHomePage = () => {
   const addProjectDiv = document.querySelector('.addProjectDiv');
   const taskListDiv = document.querySelector('.taskListDiv');
   const projectListDiv = document.querySelector('.projectListDiv');
+  const inputProjectForm = document.querySelector('.inputProjectForm');
+  const projectName = document.querySelector('.projectName');
+  const projectSubmitBtn = document.querySelector('.projectSubmitBtn');
+  const projectCancelBtn = document.querySelector('.projectCancelBtn');
 
-  // Render Projects
-  // append default project to DOM upon first render
-  // store tasklists within projects like objects within objects
-  // selected project is rendered to DOM
-
-  // toggle forms
+  // toggle task forms
   const toggleHide = () => {
     addTaskDiv.classList.toggle('hide');
     inputForm.classList.toggle('hide');
+  };
+
+  // toggle project forms
+  const toggleHideProject = () => {
+    addProjectDiv.classList.toggle('hide');
+    inputProjectForm.classList.toggle('hide');
+  };
+
+  // create project object with factory functions
+  // const createProjectObject = (projectId) => ({
+  //   return { projectId };
+  // });
+
+  // process project input
+  const processProjectInput = () => {
+    const projectId = projectName.value;
   };
 
   // creating tasks with factory functions
@@ -76,6 +93,7 @@ const renderHomePage = () => {
     renderTask(taskList);
   };
 
+  // renders task object into DOM
   const renderTask = (taskList) => {
     taskListDiv.innerHTML = '';
     taskList.forEach((task) => {
@@ -109,7 +127,18 @@ const renderHomePage = () => {
     toggleHide();
   });
 
-  addProjectDiv.addEventListener('click', () => {});
+  addProjectDiv.addEventListener('click', () => {
+    toggleHideProject();
+  });
+
+  projectSubmitBtn.addEventListener('click', () => {
+    processProjectInput();
+    toggleHideProject();
+  });
+
+  projectCancelBtn.addEventListener('click', () => {
+    toggleHideProject();
+  });
 };
 
 export default renderHomePage;

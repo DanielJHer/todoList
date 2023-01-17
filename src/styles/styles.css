@@ -70,6 +70,15 @@
 .projects {
 }
 
+.inputProjectForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputProjectForm.hide {
+  display: none;
+}
+
 .inputForm {
   display: flex;
   flex-direction: column;
