@@ -1,4 +1,4 @@
-import { projectList, id } from './Storage';
+// import { projectList, id } from './Storage';
 
 /* eslint-disable consistent-return */
 const renderHomePage = () => {
@@ -15,9 +15,17 @@ const renderHomePage = () => {
   const taskListDiv = document.querySelector('.taskListDiv');
   const projectListDiv = document.querySelector('.projectListDiv');
   const inputProjectForm = document.querySelector('.inputProjectForm');
-  const projectName = document.querySelector('.projectName');
+  const projectNameInput = document.querySelector('.projectNameInput');
   const projectSubmitBtn = document.querySelector('.projectSubmitBtn');
   const projectCancelBtn = document.querySelector('.projectCancelBtn');
+
+  // retrieve project list or empty array
+  let projectList = JSON.parse(localStorage.getItem('projectList') || '[]');
+
+  // function that stores to local
+  const storeToLocal = () => {
+    localStorage.setItem('projectList', JSON.stringify(projectList));
+  };
 
   // toggle task forms
   const toggleHide = () => {
@@ -32,17 +40,54 @@ const renderHomePage = () => {
   };
 
   // create project object with factory functions
-  // const createProjectObject = (projectId) => ({
-  //   return { projectId };
-  // });
+  const createProjectObject = (projectId, name) => ({
+    projectId,
+    name,
+  });
 
   // process project input
   const processProjectInput = () => {
-    const projectId = projectName.value;
+    const projectName = projectNameInput.value;
+
+    // conditionals
+    if (projectName === '') alert('Please enter a name!');
+
+    const newProjectObject = createProjectObject(null, projectName);
+
+    // add to local storage
+    projectList.push(newProjectObject);
+    storeToLocal();
+
+    // render to DOM
+    renderProject(projectList);
+  };
+
+  // renders project object into DOM
+  const renderProject = (projectList) => {
+    projectListDiv.innerHTML = '';
+    projectList.forEach((project) => {
+      projectListDiv.insertAdjacentHTML(
+        'afterbegin',
+        `
+        <div class="projects">
+        <p>${project.name}<p>
+        </div>
+        `
+      );
+    });
   };
 
   // creating tasks with factory functions
-  const createTaskObject = (title, description, dueDate, priority) => ({
+  const createTaskObject = (
+    projectId,
+    index,
+    title,
+    description,
+    dueDate,
+    priority
+  ) => ({
+    projectId,
+    index,
     title,
     description,
     dueDate,
@@ -107,10 +152,6 @@ const renderHomePage = () => {
       );
     });
   };
-
-  // renders local storage into dom
-  const taskList = JSON.parse(localStorage.getItem('taskList') || '[]');
-  renderTask(taskList);
 
   // event listeners
   addTaskDiv.addEventListener('click', () => {
