@@ -19,8 +19,42 @@ const renderHomePage = () => {
   const projectSubmitBtn = document.querySelector('.projectSubmitBtn');
   const projectCancelBtn = document.querySelector('.projectCancelBtn');
 
-  // retrieve project list or empty array
-  let projectList = JSON.parse(localStorage.getItem('projectList') || '[]');
+  // renders project object into DOM
+  const renderProject = (projectList) => {
+    projectListDiv.innerHTML = '';
+    projectList.forEach((project) => {
+      projectListDiv.insertAdjacentHTML(
+        'afterbegin',
+        `
+        <div class="projects">
+        <p>${project.name}<p>
+        </div>
+        `
+      );
+    });
+  };
+
+  // renders task object into DOM
+  const renderTask = (taskList) => {
+    taskListDiv.innerHTML = '';
+    taskList.forEach((task) => {
+      taskListDiv.insertAdjacentHTML(
+        'afterbegin',
+        `
+        <div class="tasks">
+        <p>Title:${task.title} Description:${task.description} Due Date:${task.dueDate} Priority:${task.priority}<p>
+        </div>
+        `
+      );
+    });
+  };
+
+  // initial retrieve project list or empty array and render
+  const projectList = JSON.parse(localStorage.getItem('projectList') || '[]');
+  renderProject(projectList);
+  if (projectList.length === 0) {
+    addTaskDiv.classList.toggle('hide');
+  }
 
   // function that stores to local
   const storeToLocal = () => {
@@ -40,19 +74,30 @@ const renderHomePage = () => {
   };
 
   // create project object with factory functions
-  const createProjectObject = (projectId, name) => ({
-    projectId,
-    name,
-  });
+  const createProjectObject = (projectId, name) => {
+    const taskList = [];
+    return {
+      projectId,
+      name,
+      taskList,
+    };
+  };
+
+  const findNextIndex = () => {
+    const length = document.querySelectorAll('.projects');
+    return length.length;
+  };
 
   // process project input
   const processProjectInput = () => {
     const projectName = projectNameInput.value;
+    const projectId = findNextIndex();
+    console.log(projectId);
 
     // conditionals
     if (projectName === '') alert('Please enter a name!');
 
-    const newProjectObject = createProjectObject(null, projectName);
+    const newProjectObject = createProjectObject(projectId, projectName);
 
     // add to local storage
     projectList.push(newProjectObject);
@@ -60,21 +105,6 @@ const renderHomePage = () => {
 
     // render to DOM
     renderProject(projectList);
-  };
-
-  // renders project object into DOM
-  const renderProject = (projectList) => {
-    projectListDiv.innerHTML = '';
-    projectList.forEach((project) => {
-      projectListDiv.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="projects">
-        <p>${project.name}<p>
-        </div>
-        `
-      );
-    });
   };
 
   // creating tasks with factory functions
@@ -105,6 +135,8 @@ const renderHomePage = () => {
   // process input -> stores object -> renders to DOM
   const processTaskInput = () => {
     // gathers user input
+    // const projectId =
+    // const index =
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
@@ -136,21 +168,6 @@ const renderHomePage = () => {
 
     // renders task into DOM
     renderTask(taskList);
-  };
-
-  // renders task object into DOM
-  const renderTask = (taskList) => {
-    taskListDiv.innerHTML = '';
-    taskList.forEach((task) => {
-      taskListDiv.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="tasks">
-        <p>Title:${task.title} Description:${task.description} Due Date:${task.dueDate} Priority:${task.priority}<p>
-        </div>
-        `
-      );
-    });
   };
 
   // event listeners

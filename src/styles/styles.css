@@ -67,7 +67,9 @@
 .tasks {
 }
 
-.projects {
+.projects:hover {
+  background-color: var(--secondary-light);
+  cursor: pointer;
 }
 
 .inputProjectForm {
