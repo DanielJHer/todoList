@@ -56,6 +56,10 @@ const renderHomePage = () => {
     addTaskDiv.classList.toggle('hide');
   }
 
+  const selected = (element) => {
+    element.classList.toggle('selected');
+  };
+
   // function that stores to local
   const storeToLocal = () => {
     localStorage.setItem('projectList', JSON.stringify(projectList));
@@ -84,8 +88,8 @@ const renderHomePage = () => {
   };
 
   const findNextIndex = () => {
-    const length = document.querySelectorAll('.projects');
-    return length.length;
+    const projectNodeList = document.querySelectorAll('.projects');
+    return projectNodeList.length;
   };
 
   // process project input
@@ -132,11 +136,18 @@ const renderHomePage = () => {
     }
   };
 
+  // find current project ID
+  // const findCurrentProjectId = () = > {
+  //   const selectedElement = document.querySelector('.selected')
+  //   return
+  // }
+
   // process input -> stores object -> renders to DOM
   const processTaskInput = () => {
     // gathers user input
-    // const projectId =
-    // const index =
+
+    const projectId = findNextIndex();
+    const index = Number(localStorage.getItem('currentIndex')) || 0;
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
@@ -155,6 +166,8 @@ const renderHomePage = () => {
 
     // creates new object using factory function
     const newTaskObject = createTaskObject(
+      projectId,
+      index,
       title,
       description,
       dueDate,
@@ -162,12 +175,11 @@ const renderHomePage = () => {
     );
 
     // locally stores objects
-    const taskList = JSON.parse(localStorage.getItem('taskList') || '[]');
-    taskList.push(newTaskObject);
-    localStorage.setItem('taskList', JSON.stringify(taskList));
+    projectList[projectId].taskList.push(newTaskObject);
+    storeToLocal();
 
     // renders task into DOM
-    renderTask(taskList);
+    renderTask(projectList[projectId].taskList);
   };
 
   // event listeners
@@ -197,6 +209,19 @@ const renderHomePage = () => {
   projectCancelBtn.addEventListener('click', () => {
     toggleHideProject();
   });
+
+  const projects = document.querySelectorAll('.projects');
+
+  projects.forEach((project) =>
+    project.addEventListener('click', (e) => {
+      selected(e.currentTarget);
+    })
+  );
 };
 
 export default renderHomePage;
+
+// first thing is to figure out how to select a project and then after it's selected
+// render the tasklist of that project
+// add task data goes to the correct project
+//

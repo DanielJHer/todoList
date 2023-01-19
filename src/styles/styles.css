@@ -29,6 +29,10 @@
   flex-direction: row;
 }
 
+.selected {
+  background-color: var(--secondary-light);
+}
+
 .projectDiv {
   flex-direction: column;
   position: absolute;
