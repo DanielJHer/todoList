@@ -210,10 +210,14 @@ const renderHomePage = () => {
     toggleHideProject();
   });
 
+  // handling selector
   const projects = document.querySelectorAll('.projects');
-
+  const removeSelectors = () => {
+    projects.forEach((project) => project.classList.remove('selected'));
+  };
   projects.forEach((project) =>
     project.addEventListener('click', (e) => {
+      removeSelectors();
       selected(e.currentTarget);
     })
   );
@@ -222,6 +226,6 @@ const renderHomePage = () => {
 export default renderHomePage;
 
 // first thing is to figure out how to select a project and then after it's selected
-// render the tasklist of that project
+// render the tasklist of that selected project
 // add task data goes to the correct project
-//
+// edit project name and task content
