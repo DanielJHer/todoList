@@ -26,8 +26,8 @@ const renderHomePage = () => {
       projectListDiv.insertAdjacentHTML(
         'afterbegin',
         `
-        <div class="projects">
-        <p>${project.name}<p>
+        <div class="projects" data-project="${project.projectId}">
+        <p>${project.name}</p>
         </div>
         `
       );
@@ -52,12 +52,10 @@ const renderHomePage = () => {
   // initial retrieve project list or empty array and render
   const projectList = JSON.parse(localStorage.getItem('projectList') || '[]');
   renderProject(projectList);
-  if (projectList.length === 0) {
-    addTaskDiv.classList.toggle('hide');
-  }
+  addTaskDiv.classList.add('hide');
 
   const selected = (element) => {
-    element.classList.toggle('selected');
+    element.classList.add('selected');
   };
 
   // function that stores to local
@@ -94,9 +92,8 @@ const renderHomePage = () => {
 
   // process project input
   const processProjectInput = () => {
-    const projectName = projectNameInput.value;
     const projectId = findNextIndex();
-    console.log(projectId);
+    const projectName = projectNameInput.value;
 
     // conditionals
     if (projectName === '') alert('Please enter a name!');
@@ -137,16 +134,16 @@ const renderHomePage = () => {
   };
 
   // find current project ID
-  // const findCurrentProjectId = () = > {
-  //   const selectedElement = document.querySelector('.selected')
-  //   return
-  // }
+  const findCurrentProjectId = () => {
+    const selectedElement = document.querySelector('.selected');
+    return selectedElement.getAttribute('data-project');
+  };
 
   // process input -> stores object -> renders to DOM
   const processTaskInput = () => {
     // gathers user input
 
-    const projectId = findNextIndex();
+    const projectId = findCurrentProjectId();
     const index = Number(localStorage.getItem('currentIndex')) || 0;
     const title = inputText.value;
     const description = textArea.value;
@@ -215,6 +212,7 @@ const renderHomePage = () => {
   const removeSelectors = () => {
     projects.forEach((project) => project.classList.remove('selected'));
   };
+
   projects.forEach((project) =>
     project.addEventListener('click', (e) => {
       removeSelectors();
@@ -225,7 +223,6 @@ const renderHomePage = () => {
 
 export default renderHomePage;
 
-// first thing is to figure out how to select a project and then after it's selected
 // render the tasklist of that selected project
 // add task data goes to the correct project
 // edit project name and task content
