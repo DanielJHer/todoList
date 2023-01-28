@@ -54,6 +54,10 @@ const renderHomePage = () => {
   renderProject(projectList);
   addTaskDiv.classList.add('hide');
 
+  // initial retrieve task index or default
+  let taskIndex = Number(localStorage.getItem('currentIndex')) || 0;
+
+  // selects projects
   const selected = (element) => {
     element.classList.add('selected');
   };
@@ -61,6 +65,7 @@ const renderHomePage = () => {
   // function that stores to local
   const storeToLocal = () => {
     localStorage.setItem('projectList', JSON.stringify(projectList));
+    // localStorage.setItem('currentId', (id).toString());
   };
 
   // toggle task forms
@@ -144,7 +149,7 @@ const renderHomePage = () => {
     // gathers user input
 
     const projectId = findCurrentProjectId();
-    const index = Number(localStorage.getItem('currentIndex')) || 0;
+    const index = taskIndex;
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
@@ -177,6 +182,9 @@ const renderHomePage = () => {
 
     // renders task into DOM
     renderTask(projectList[projectId].taskList);
+
+    // add to index for next task
+    taskIndex++;
   };
 
   // event listeners
@@ -217,12 +225,14 @@ const renderHomePage = () => {
     project.addEventListener('click', (e) => {
       removeSelectors();
       selected(e.currentTarget);
+      addTaskDiv.classList.remove('hide');
     })
   );
 };
 
 export default renderHomePage;
 
+// when processing task, need to ++ the task index
 // render the tasklist of that selected project
 // add task data goes to the correct project
 // edit project name and task content
