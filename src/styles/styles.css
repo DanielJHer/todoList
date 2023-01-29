@@ -69,6 +69,16 @@
 }
 
 .tasks {
+  padding: 1px;
+}
+
+.tasks:hover {
+  background-color: var(--secondary-light);
+  cursor: pointer;
+}
+
+.projects p {
+  padding: 10px;
 }
 
 .projects:hover {

@@ -184,7 +184,7 @@ const renderHomePage = () => {
     renderTask(projectList[projectId].taskList);
 
     // add to index for next task
-    taskIndex++;
+    taskIndex += 1;
   };
 
   // event listeners
@@ -215,24 +215,31 @@ const renderHomePage = () => {
     toggleHideProject();
   });
 
-  // handling selector
   const projects = document.querySelectorAll('.projects');
-  const removeSelectors = () => {
+
+  // project selector
+  const removeProjectSelectors = () => {
     projects.forEach((project) => project.classList.remove('selected'));
   };
 
   projects.forEach((project) =>
     project.addEventListener('click', (e) => {
-      removeSelectors();
+      removeProjectSelectors();
       selected(e.currentTarget);
       addTaskDiv.classList.remove('hide');
+      renderTask(projectList[findCurrentProjectId()].taskList);
+
+      const tasks = document.querySelectorAll('.tasks');
+      tasks.forEach((task) =>
+        task.addEventListener('click', (e) => {
+          selected(e.currentTarget);
+        })
+      );
     })
   );
+
+  // add selectors and event listeners for each task
+  // opens form for each task and then allows to save in that task
 };
 
 export default renderHomePage;
-
-// when processing task, need to ++ the task index
-// render the tasklist of that selected project
-// add task data goes to the correct project
-// edit project name and task content
