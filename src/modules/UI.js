@@ -43,10 +43,28 @@ const renderHomePage = () => {
         `
         <div class="tasks">
         <p>Title:${task.title} Description:${task.description} Due Date:${task.dueDate} Priority:${task.priority}<p>
+        <button class='taskEditBtn'>Edit</button>
+        <button class='taskDeleteBtn'>Delete</button>
         </div>
         `
       );
     });
+
+    // adding event listeners for task buttons
+    const taskEditBtns = document.querySelectorAll('.taskEditBtn');
+    const taskDeleteBtns = document.querySelectorAll('.taskDeleteBtn');
+
+    taskEditBtns.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        console.log('hi');
+      })
+    );
+
+    taskDeleteBtns.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        console.log('bye');
+      })
+    );
   };
 
   // initial retrieve project list or empty array and render
@@ -187,6 +205,12 @@ const renderHomePage = () => {
     taskIndex += 1;
   };
 
+  // project selector
+  const projects = document.querySelectorAll('.projects');
+  const removeProjectSelectors = () => {
+    projects.forEach((project) => project.classList.remove('selected'));
+  };
+
   // event listeners
   addTaskDiv.addEventListener('click', () => {
     toggleHide();
@@ -215,31 +239,14 @@ const renderHomePage = () => {
     toggleHideProject();
   });
 
-  const projects = document.querySelectorAll('.projects');
-
-  // project selector
-  const removeProjectSelectors = () => {
-    projects.forEach((project) => project.classList.remove('selected'));
-  };
-
   projects.forEach((project) =>
     project.addEventListener('click', (e) => {
       removeProjectSelectors();
       selected(e.currentTarget);
       addTaskDiv.classList.remove('hide');
       renderTask(projectList[findCurrentProjectId()].taskList);
-
-      const tasks = document.querySelectorAll('.tasks');
-      tasks.forEach((task) =>
-        task.addEventListener('click', (e) => {
-          selected(e.currentTarget);
-        })
-      );
     })
   );
-
-  // add selectors and event listeners for each task
-  // opens form for each task and then allows to save in that task
 };
 
 export default renderHomePage;
