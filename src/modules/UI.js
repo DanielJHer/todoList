@@ -1,5 +1,3 @@
-// import { projectList, id } from './Storage';
-
 /* eslint-disable consistent-return */
 const renderHomePage = () => {
   // Selecting DOM elements
@@ -56,13 +54,27 @@ const renderHomePage = () => {
 
     taskEditBtns.forEach((btn) =>
       btn.addEventListener('click', () => {
-        console.log('hi');
+        // set the tasListDiv = '';
+        // render task form of selected task
+        // fill in task form with selected task data
+        // submit will save into local storage
+        // re-render taskListDiv with updated task data
       })
     );
 
     taskDeleteBtns.forEach((btn) =>
       btn.addEventListener('click', () => {
-        console.log('bye');
+        // select task and return taskId
+        const taskIndex = defaultTaskId;
+
+        // find the index of selected task in array!
+
+        // deletes task objects from local storage
+        projectList[findCurrentProjectId()].taskList.splice(taskIndex, 1);
+        storeToLocal();
+
+        // renders updated taskList into DOM
+        renderTask(projectList[findCurrentProjectId()].taskList);
       })
     );
   };
@@ -73,7 +85,7 @@ const renderHomePage = () => {
   addTaskDiv.classList.add('hide');
 
   // initial retrieve task index or default
-  let taskIndex = Number(localStorage.getItem('currentIndex')) || 0;
+  let defaultTaskId = Number(localStorage.getItem('currentIndex')) || 0;
 
   // selects projects
   const selected = (element) => {
@@ -134,14 +146,14 @@ const renderHomePage = () => {
   // creating tasks with factory functions
   const createTaskObject = (
     projectId,
-    index,
+    taskId,
     title,
     description,
     dueDate,
     priority
   ) => ({
     projectId,
-    index,
+    taskId,
     title,
     description,
     dueDate,
@@ -165,9 +177,8 @@ const renderHomePage = () => {
   // process input -> stores object -> renders to DOM
   const processTaskInput = () => {
     // gathers user input
-
     const projectId = findCurrentProjectId();
-    const index = taskIndex;
+    const taskId = defaultTaskId;
     const title = inputText.value;
     const description = textArea.value;
     const dueDate = inputDate.value;
@@ -187,7 +198,7 @@ const renderHomePage = () => {
     // creates new object using factory function
     const newTaskObject = createTaskObject(
       projectId,
-      index,
+      taskId,
       title,
       description,
       dueDate,
@@ -202,7 +213,7 @@ const renderHomePage = () => {
     renderTask(projectList[projectId].taskList);
 
     // add to index for next task
-    taskIndex += 1;
+    localStorage.setItem('currentTaskIndex', (defaultTaskId += 1));
   };
 
   // project selector
