@@ -39,7 +39,7 @@ const renderHomePage = () => {
       taskListDiv.insertAdjacentHTML(
         'afterbegin',
         `
-        <div class="tasks">
+        <div class="tasks" data-task=${task.taskId}>
         <p>Title:${task.title} Description:${task.description} Due Date:${task.dueDate} Priority:${task.priority}<p>
         <button class='taskEditBtn'>Edit</button>
         <button class='taskDeleteBtn'>Delete</button>
@@ -63,14 +63,15 @@ const renderHomePage = () => {
     );
 
     taskDeleteBtns.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        // select task and return taskId
-        const taskIndex = defaultTaskId;
-
-        // find the index of selected task in array!
+      btn.addEventListener('click', (e) => {
+        // finds the selected task
+        const selectedTaskDiv = e.target.closest('div');
+        const selectedTask = selectedTaskDiv.getAttribute('data-task');
 
         // deletes task objects from local storage
-        projectList[findCurrentProjectId()].taskList.splice(taskIndex, 1);
+        projectList[findCurrentProjectId()].taskList = projectList[
+          findCurrentProjectId()
+        ].taskList.filter((task) => task.taskId != selectedTask);
         storeToLocal();
 
         // renders updated taskList into DOM
@@ -85,7 +86,7 @@ const renderHomePage = () => {
   addTaskDiv.classList.add('hide');
 
   // initial retrieve task index or default
-  let defaultTaskId = Number(localStorage.getItem('currentIndex')) || 0;
+  let defaultTaskId = Number(localStorage.getItem('currentTaskId')) || 0;
 
   // selects projects
   const selected = (element) => {
@@ -213,7 +214,7 @@ const renderHomePage = () => {
     renderTask(projectList[projectId].taskList);
 
     // add to index for next task
-    localStorage.setItem('currentTaskIndex', (defaultTaskId += 1));
+    localStorage.setItem('currentTaskId', (defaultTaskId += 1));
   };
 
   // project selector
@@ -244,6 +245,7 @@ const renderHomePage = () => {
   projectSubmitBtn.addEventListener('click', () => {
     processProjectInput();
     toggleHideProject();
+    addTaskDiv.classList.remove('hide');
   });
 
   projectCancelBtn.addEventListener('click', () => {
