@@ -17,6 +17,14 @@ const renderHomePage = () => {
   const projectSubmitBtn = document.querySelector('.projectSubmitBtn');
   const projectCancelBtn = document.querySelector('.projectCancelBtn');
 
+  // render priority nodelist
+  const renderPriorityCheck = (selectedTaskObject) => {
+    for (let i = 0; i < priorityList.length; i++) {
+      if (priorityList[i].value === selectedTaskObject.priority)
+        priorityList[i].checked = true;
+    }
+  };
+
   // renders project object into DOM
   const renderProject = (projectList) => {
     projectListDiv.innerHTML = '';
@@ -53,10 +61,22 @@ const renderHomePage = () => {
     const taskDeleteBtns = document.querySelectorAll('.taskDeleteBtn');
 
     taskEditBtns.forEach((btn) =>
-      btn.addEventListener('click', () => {
-        // set the tasListDiv = '';
-        // render task form of selected task
-        // fill in task form with selected task data
+      btn.addEventListener('click', (e) => {
+        // find selected task object
+        const selectedTaskDiv = e.target.closest('div');
+        const selectedTask = selectedTaskDiv.getAttribute('data-task');
+        const selectedTaskObject = projectList[
+          findCurrentProjectId()
+        ].taskList.find((task) => task.taskId == selectedTask);
+
+        // render task form of selected task object
+        taskListDiv.innerHTML = '';
+        toggleHide();
+        inputText.value = selectedTaskObject.title;
+        textArea.value = selectedTaskObject.description;
+        renderPriorityCheck(selectedTaskObject);
+        inputDate.value = selectedTaskObject.dueDate;
+
         // submit will save into local storage
         // re-render taskListDiv with updated task data
       })
