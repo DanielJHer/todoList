@@ -60,6 +60,37 @@
             <button class="cancelBtn">Cancel</button>
           </div>
         </form>
+
+        <form class="editForm hide">
+          <p class="taskEditId"></p>
+          <label>Title:</label>
+          <input type="text" class="editInputText" placeholder="What to do?" />
+
+          <label>Details:</label>
+          <textarea
+            class="editTextArea"
+            type="text"
+            placeholder="Let's try to be specific"
+          ></textarea>
+
+          <label>Priority:</label>
+          <div class="editpriorityForm">
+            <label>Low</label>
+            <input type="radio" value="Low" name="priority" />
+            <label>Medium</label>
+            <input type="radio" value="Medium" name="priority" />
+            <label>High</label>
+            <input type="radio" value="High" name="priority" />
+          </div>
+
+          <label>Due Date:</label>
+          <input class="editInputDate" type="date" />
+
+          <div class="editformBtns">
+            <button class="editSubmitBtn" type="button">Submit</button>
+            <button class="editCancelBtn">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
 

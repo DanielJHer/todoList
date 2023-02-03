@@ -16,6 +16,13 @@ const renderHomePage = () => {
   const projectNameInput = document.querySelector('.projectNameInput');
   const projectSubmitBtn = document.querySelector('.projectSubmitBtn');
   const projectCancelBtn = document.querySelector('.projectCancelBtn');
+  const editForm = document.querySelector('.editForm');
+  const editInputText = document.querySelector('.editInputText');
+  const editSubmitBtn = document.querySelector('.editSubmitBtn');
+  const editCancelBtn = document.querySelector('.editCancelBtn');
+  const editTextArea = document.querySelector('.editTextArea');
+  const editInputDate = document.querySelector('.editInputDate');
+  const taskEditId = document.querySelector('.taskEditId');
 
   // render priority nodelist
   const renderPriorityCheck = (selectedTaskObject) => {
@@ -62,6 +69,7 @@ const renderHomePage = () => {
 
     taskEditBtns.forEach((btn) =>
       btn.addEventListener('click', (e) => {
+        addTaskDiv.classList.add('hide');
         // find selected task object
         const selectedTaskDiv = e.target.closest('div');
         const selectedTask = selectedTaskDiv.getAttribute('data-task');
@@ -69,16 +77,15 @@ const renderHomePage = () => {
           findCurrentProjectId()
         ].taskList.find((task) => task.taskId == selectedTask);
 
-        // render task form of selected task object
+        // render task form with selected task object
         taskListDiv.innerHTML = '';
-        toggleHide();
-        inputText.value = selectedTaskObject.title;
-        textArea.value = selectedTaskObject.description;
+        editForm.classList.remove('hide');
+        editInputText.value = selectedTaskObject.title;
+        editTextArea.value = selectedTaskObject.description;
         renderPriorityCheck(selectedTaskObject);
-        inputDate.value = selectedTaskObject.dueDate;
-
-        // submit will save into local storage
-        // re-render taskListDiv with updated task data
+        editInputDate.value = selectedTaskObject.dueDate;
+        taskEditId.value = selectedTaskObject;
+        console.log(selectedTaskObject);
       })
     );
 
@@ -113,10 +120,9 @@ const renderHomePage = () => {
     element.classList.add('selected');
   };
 
-  // function that stores to local
+  // function that stores projectList to local
   const storeToLocal = () => {
     localStorage.setItem('projectList', JSON.stringify(projectList));
-    // localStorage.setItem('currentId', (id).toString());
   };
 
   // toggle task forms
@@ -162,6 +168,37 @@ const renderHomePage = () => {
 
     // render to DOM
     renderProject(projectList);
+  };
+
+  // process editing task object form
+  const processEditingTask = () => {
+    // gets input data
+    const projectId = findCurrentProjectId();
+    const taskId = defaultTaskId;
+    const title = editInputText.value;
+    const description = editTextArea.value;
+    const dueDate = editInputDate.value;
+    const priority = findPriority(priorityList);
+    const selectedTaskObject = taskEditId.value;
+
+    const newEditedTaskObject = createTaskObject(
+      projectId,
+      taskId,
+      title,
+      description,
+      dueDate,
+      priority
+    );
+
+    // locates the task index and then replaces it with new task object
+    const taskIndex =
+      projectList[projectId].taskList.indexOf(selectedTaskObject);
+    projectList[projectId].taskList.splice(taskIndex, 1, newEditedTaskObject);
+    storeToLocal();
+
+    // renders new task into DOM
+    renderTask(projectList[projectId].taskList);
+    editForm.classList.add('hide');
   };
 
   // creating tasks with factory functions
@@ -260,6 +297,16 @@ const renderHomePage = () => {
 
   addProjectDiv.addEventListener('click', () => {
     toggleHideProject();
+  });
+
+  editCancelBtn.addEventListener('click', () => {
+    console.log('hi');
+  });
+
+  editSubmitBtn.addEventListener('click', () => {
+    processEditingTask();
+
+    console.log('hey');
   });
 
   projectSubmitBtn.addEventListener('click', () => {
