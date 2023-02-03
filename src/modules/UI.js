@@ -85,7 +85,6 @@ const renderHomePage = () => {
         renderPriorityCheck(selectedTaskObject);
         editInputDate.value = selectedTaskObject.dueDate;
         taskEditId.value = selectedTaskObject;
-        console.log(selectedTaskObject);
       })
     );
 
@@ -199,6 +198,8 @@ const renderHomePage = () => {
     // renders new task into DOM
     renderTask(projectList[projectId].taskList);
     editForm.classList.add('hide');
+
+    taskEditId.value = '';
   };
 
   // creating tasks with factory functions
@@ -299,14 +300,10 @@ const renderHomePage = () => {
     toggleHideProject();
   });
 
-  editCancelBtn.addEventListener('click', () => {
-    console.log('hi');
-  });
+  editCancelBtn.addEventListener('click', () => {});
 
   editSubmitBtn.addEventListener('click', () => {
     processEditingTask();
-
-    console.log('hey');
   });
 
   projectSubmitBtn.addEventListener('click', () => {

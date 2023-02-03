@@ -106,6 +106,15 @@
   display: none;
 }
 
+.editForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.editForm.hide {
+  display: none;
+}
+
 .priorityForm {
   display: flex;
   justify-content: center;
